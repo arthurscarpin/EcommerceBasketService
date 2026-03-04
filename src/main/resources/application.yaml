@@ -19,3 +19,7 @@ spring:
 basket:
   client:
     platzi: https://api.escuelajs.co/api/v1
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
