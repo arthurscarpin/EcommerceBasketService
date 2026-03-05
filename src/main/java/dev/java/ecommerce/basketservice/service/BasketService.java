@@ -2,6 +2,7 @@ package dev.java.ecommerce.basketservice.service;
 
 import dev.java.ecommerce.basketservice.client.response.PlatziProductResponse;
 import dev.java.ecommerce.basketservice.controller.request.BasketRequest;
+import dev.java.ecommerce.basketservice.controller.request.PaymentRequest;
 import dev.java.ecommerce.basketservice.entity.Basket;
 import dev.java.ecommerce.basketservice.entity.Product;
 import dev.java.ecommerce.basketservice.entity.Status;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +51,33 @@ public class BasketService {
                 .build();
 
         basket.calculateTotalPrice();
+        return repository.save(basket);
+    }
+
+    public Basket updateById(String id, BasketRequest request) {
+        Basket basket = getById(id);
+
+        List<Product> products = new ArrayList<>();
+        request.products().forEach(product -> {
+            PlatziProductResponse platziProductResponse = productService.getById(product.id());
+            products.add(Product.builder()
+                    .id(platziProductResponse.id())
+                    .title(platziProductResponse.title())
+                    .price(platziProductResponse.price())
+                    .quantity(product.quantity())
+                    .build()
+            );
+        });
+
+        basket.setProducts(products);
+        basket.calculateTotalPrice();
+        return repository.save(basket);
+    }
+
+    public Basket payBasket(String id, PaymentRequest request) {
+        Basket basket = getById(id);
+        basket.setPaymentMethod(request.paymentMethod());
+        basket.setStatus(Status.SOLD);
         return repository.save(basket);
     }
 }
