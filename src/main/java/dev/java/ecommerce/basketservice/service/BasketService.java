@@ -80,4 +80,8 @@ public class BasketService {
         basket.setStatus(Status.SOLD);
         return repository.save(basket);
     }
+
+    public void deleteById(String id) {
+        repository.delete(getById(id));
+    }
 }
