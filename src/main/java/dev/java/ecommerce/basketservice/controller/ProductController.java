@@ -1,6 +1,7 @@
 package dev.java.ecommerce.basketservice.controller;
 
 import dev.java.ecommerce.basketservice.client.response.PlatziProductResponse;
+import dev.java.ecommerce.basketservice.documentation.ProductControllerDoc;
 import dev.java.ecommerce.basketservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductController implements ProductControllerDoc {
 
     private final ProductService service;
 

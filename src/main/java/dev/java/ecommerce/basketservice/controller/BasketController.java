@@ -2,6 +2,7 @@ package dev.java.ecommerce.basketservice.controller;
 
 import dev.java.ecommerce.basketservice.controller.request.BasketRequest;
 import dev.java.ecommerce.basketservice.controller.request.PaymentRequest;
+import dev.java.ecommerce.basketservice.documentation.BasketControllerDoc;
 import dev.java.ecommerce.basketservice.entity.Basket;
 import dev.java.ecommerce.basketservice.service.BasketService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/basket")
 @RequiredArgsConstructor
-public class BasketController {
+public class BasketController implements BasketControllerDoc {
 
     private final BasketService service;
 
@@ -32,7 +33,7 @@ public class BasketController {
     }
 
     @PutMapping("/{id}/payment")
-    public ResponseEntity<Basket> updateById(@PathVariable String id, @RequestBody PaymentRequest request) {
+    public ResponseEntity<Basket> updateByIdPayBasket(@PathVariable String id, @RequestBody PaymentRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(service.payBasket(id, request));
     }
 
